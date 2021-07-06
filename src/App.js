@@ -1,23 +1,28 @@
 import logo from './logo.svg';
 import './App.css';
 
+import Page from './components/Page';
+import { useState } from 'react';
+import styles from './components/styles.module.css';
+
 function App() {
+
+  const [tool, setTool] = useState("pen");
+
+  const onMouseDown = (e) => {
+    console.log(e);
+    if(tool == "pen"){
+      setTool("eraser")
+    } else {
+      setTool("pen");
+    }
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1 className={styles.tool}>{tool}</h1>
+      <button onMouseDown={onMouseDown}></button>
+      <Page tool={tool}></Page>
     </div>
   );
 }

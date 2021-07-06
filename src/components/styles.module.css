@@ -1,0 +1,8 @@
+.canvas {
+    touch-action: none;
+    overscroll-behavior-x: none;
+}
+
+.tool {
+    color: DodgerBlue;
+}
