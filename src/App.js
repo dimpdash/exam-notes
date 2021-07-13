@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 
+import PageView from './components/PageView';
 import Page from './components/Page';
 import { useState } from 'react';
 import styles from './components/styles.module.css';
@@ -22,7 +23,8 @@ function App() {
     <div className="App">
       <h1 className={styles.tool}>{tool}</h1>
       <button onMouseDown={onMouseDown}></button>
-      <Page tool={tool}></Page>
+      <PageView tool={tool}/>
+      {/* <Page tool={tool}/> */}
     </div>
   );
 }

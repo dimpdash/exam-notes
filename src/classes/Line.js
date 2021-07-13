@@ -1,48 +1,18 @@
+class Line{
 
-export default class Line{
-    points = [];
-    path;
-    segments = [];
-    color = "black";
-    points = [];
-
-    constructor(lineId){
-        this.id = lineId;
+    constructor(x1, y1, x2, y2, color = 'black'){
+        this.x1 = x1; 
+        this.x2 = x2;
+        this.y1 = y1;
+        this.y2 = y2;
+        this.color = color;
     }
 
-    moveTo(x,y){
-        this.segments.push(`M ${x} ${y} `);
-        this.points.push({x:x, y:y, color:"blue"});
-    }
-
-    bezierLineTo(x1, y1, x2, y2, x, y){
-        this.segments.push(`C ${x1} ${y1}, ${x2} ${y2}, ${x} ${y} `);
-        this.points.push({x:x, y:y, color: "red"});
-    }
-
-    getd(){
-        return ''.concat(...this.segments);
-    }
-
-drawDots(){
-        return this.points.map( (p) => {
-            return <circle cx={p.x} cy={p.y} r="2" stroke="black" stroke-width="1" fill={p.color} />
-        })
-    }
-
-    getPath(){
+    get(){
         return (
-            <g>
-            <path key={this.lineId} d={this.getd()} stroke={this.color} fill="transparent"/>
-            {/* {this.drawDots()} */}
-            </g>
-            /* 
-            </div> */
-            // {
-            //     this.segments.map( (seg) => {
-            //         return <circle cx={seg.} cy={} r="10" stroke="black" stroke-width="3" fill="red" />
-            //     })
-            // }
-        );
+            <line x1={this.x1} y1={this.y1} x2={this.x2} y2={this.y2} stroke={this.color}/>
+        )
     }
 }
+
+export default Line;

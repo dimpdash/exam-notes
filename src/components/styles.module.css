@@ -1,8 +1,19 @@
 .canvas {
-    touch-action: none;
-    overscroll-behavior-x: none;
+    /* touch-action: none; */
+    display: inline-block;  
+
+
 }
 
 .tool {
     color: DodgerBlue;
+}
+
+.page{
+    background-color: rgb(97, 97, 97);
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    text-align: center;
 }

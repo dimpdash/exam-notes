@@ -1,7 +1,9 @@
 import Canvas from "./Canvas"
 import React, {useEffect, useState} from "react";
+import Path from "../classes/Path";
 import Line from "../classes/Line";
 import RBush from "rbush";
+import styles from './styles.module.css'
 
 export function rollingAverage(points,i,N){
     let n = i-N >= 0 ? N : i+1
@@ -38,12 +40,30 @@ const savePointsToTree = (points, lines) => {
     }));
 }
 
+const mm = 2;
 
+const Background = (props) => {
+    console.log(props.canvas.width)
+    let lines = []
+    
+
+    let spacing = 10*mm
+    let numOfLines = Math.floor(props.canvas.height / spacing)
+    console.log(numOfLines)
+    for(let i = 0; i < numOfLines; i++){
+        let line = new Line(0, spacing*(i+1), props.canvas.width, spacing*(i+1), 'blue');
+        lines.push(line)
+    }
+    
+    return lines.map( l => l.get());
+}
 
 const Page = (props) => {
     let tool = props.tool;;
     let newPath = [];
     let currentLineId;
+
+
 
     
     function penMove(e){
@@ -104,42 +124,55 @@ const Page = (props) => {
 
 
     const onPointerMove = (e) => {
-        e.preventDefault()
-        e.stopPropagation();
+        // e.preventDefault()
+        // e.stopPropagation();
+        // console.log(e)
         let pointerEvt = e.nativeEvent;
-        if (tool == "pen"){
-            penMove(e);
-        } else if (tool == "eraser") {
-            if (e.buttons == 1){
-                erase(pointerEvt);
+        if (e.pointerType == "pen"){
+            console.log("move here")
+            pointerEvt.target.setPointerCapture(pointerEvt.pointerId)
+            if (tool == "pen"){
+                penMove(e);
+            } else if (tool == "eraser") {
+                if (e.buttons == 1){
+                    erase(pointerEvt);
+                }
             }
         }
     };
 
     const onPointerDown = (e) => {
-        e.preventDefault()
-        e.stopPropagation();
+        // e.preventDefault()
+        // e.stopPropagation();
         let pointerEvt = e.nativeEvent;
-        if (tool == "pen"){
-            console.log(lines);
-            setPoints([]);
-            points.push(getPos(pointerEvt));
-        } else if (tool == "eraser") {
-            erase(pointerEvt);
+        if (e.pointerType == "pen"){
+            console.log('here');
+            pointerEvt.target.setPointerCapture(pointerEvt.pointerId)
+            if (tool == "pen"){
+                console.log(lines);
+                setPoints([]);
+                points.push(getPos(pointerEvt));
+            } else if (tool == "eraser") {
+                erase(pointerEvt);
+            }
         }
     };
 
     const onPointerUp = (e) => {
-        e.preventDefault()
-        e.stopPropagation();
+        // e.preventDefault()
+        // e.stopPropagation();
         //save to tree
-        if (tool == "pen"){
-            savePointsToTree(points, count);
+        if (e.pointerType == "pen"){
+            if (tool == "pen"){
+                    savePointsToTree(points, count);
 
-            setCount(count + 1);
-            console.log(count);
-            setPoints([]);
+                    setCount(count + 1);
+                    console.log(count);
+                    setPoints([]);
+            }
         }
+
+
     };
 
 
@@ -151,7 +184,7 @@ const Page = (props) => {
         if (typeof(f) == 'undefined') f = 0;
         if (typeof(t) == 'undefined') t = 1;
         
-        let line = new Line(count);
+        let line = new Path(count);
         
         line.moveTo(points[0].x, points[0].y);
         
@@ -204,9 +237,17 @@ const Page = (props) => {
     
     const [points, setPoints] = useState([]);
 
+    let canvasProps = {
+        lines: lines,
+        width: 210*mm,
+        height: 297*mm,
+        Background: Background
+
+    }
+
     return (
-        <div>
-            <Canvas lines={lines} onPointerMove={onPointerMove} onPointerDown={onPointerDown} onPointerUp={onPointerUp}></Canvas>
+        <div className={styles.page} styles={{width: canvasProps.width}}>
+            <Canvas {...canvasProps} onLostPointerCapture={() => console.log('Lost pointer capture')} onGotPointerCapture={() => console.log('Got pointer capture')} onPointerMove={onPointerMove} onPointerDown={onPointerDown} onPointerUp={onPointerUp}></Canvas>
         </div>
     );
 };

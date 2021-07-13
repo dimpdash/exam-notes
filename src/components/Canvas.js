@@ -7,13 +7,22 @@ const Canvas = props => {
         // console.log(line);
         return line
     }
-
-    const {lines, ...rest} = props;
+    let {lines, Background, ...rest} = props
+    // Background |= () => null;
     // console.log(lines);
+    console.log(props.width, props.height)
+    let divStyle = {
+        'height': '100%',
+        'width': rest.width,
+        'position': 'relative'
+      }
+
     return (
-        <div className={styles.canvas}>
-            <svg {...rest}  className="office" xmlns="http://www.w3.org/2000/svg" width={512} height={512} viewBox="0 0" aria-labelledby="title">
-                    {lines.map(svgLine)}  
+        <div className={styles.canvas} style={divStyle}>
+            <svg {...rest} xmlns="http://www.w3.org/2000/svg" viewBox="0 0" aria-labelledby="title">
+                <rect width="100%" height="100%" fill="white"/>
+                <Background canvas={rest}></Background>
+                {props.lines.map(svgLine)}  
                     
             </svg>
         </div>
