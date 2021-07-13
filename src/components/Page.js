@@ -128,6 +128,8 @@ const Page = (props) => {
         // e.stopPropagation();
         // console.log(e)
         let pointerEvt = e.nativeEvent;
+        // pointerEvt.preventDefault();
+        // pointerEvt.stopPropagation();
         if (e.pointerType == "pen"){
             console.log("move here")
             pointerEvt.target.setPointerCapture(pointerEvt.pointerId)
@@ -145,6 +147,8 @@ const Page = (props) => {
         // e.preventDefault()
         // e.stopPropagation();
         let pointerEvt = e.nativeEvent;
+        // pointerEvt.preventDefault();
+        // pointerEvt.stopPropagation();
         if (e.pointerType == "pen"){
             console.log('here');
             pointerEvt.target.setPointerCapture(pointerEvt.pointerId)
@@ -244,7 +248,7 @@ const Page = (props) => {
         Background: Background
 
     }
-
+    const preventTouch = props.preventTouch;
     return (
         <div className={styles.page} styles={{width: canvasProps.width}}>
             <Canvas {...canvasProps} onLostPointerCapture={() => console.log('Lost pointer capture')} onGotPointerCapture={() => console.log('Got pointer capture')} onPointerMove={onPointerMove} onPointerDown={onPointerDown} onPointerUp={onPointerUp}></Canvas>
