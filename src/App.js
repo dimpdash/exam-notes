@@ -8,7 +8,6 @@ import styles from './components/styles.module.css';
 import Toolbar from './components/Toolbar';
 import {PenContextProvider} from './components/PenContext';
 
-
 function App() {
   return (
     <div className="App">

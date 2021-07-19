@@ -39,6 +39,12 @@ const PageView = (props) => {
         }
     }
 
+    function preventScroll(e){
+        console.log(e);
+        e.stopPropagation();
+    }
+
+
     const getNewPageKey = ()=>{
         setNextId(nextId+1);
         return nextId;
@@ -60,11 +66,12 @@ const PageView = (props) => {
     return (
         //TODO allow users to add pages horizontally
         //text-align must be left otherwize zooming does not properly occur
-        <div  style={{'touch-action': 'auto', "text-align": "left"}} onTouchStart={preventPenEvent} onTouchEnd={(e) =>  preventPenEvent(e)} onTouchMove={(e) =>  preventPenEvent(e)} onPointerMove={onPointerMove} onPointerDown={onPointerDown} onPointerUp={onPointerUp}>
-            <MapInteractionCSS>
+        <div  style={{'touch-action': 'auto', "text-align": "left"}} onWheel={preventScroll} onTouchStart={preventPenEvent} onTouchEnd={(e) =>  preventPenEvent(e)} onTouchMove={(e) =>  preventPenEvent(e)} onPointerMove={onPointerMove} onPointerDown={onPointerDown} onPointerUp={onPointerUp}>
+            <MapInteractionCSS onWheel={preventScroll}>
                 {children}                
             </MapInteractionCSS>
         </div>   
+
     )
 }
 

@@ -5,6 +5,7 @@ import styles from './styles.module.css';
 import { usePenContext } from './PenContext';
 import { ToolTypes } from '../interfaces/ToolTypes';
 import { ColorPicker } from 'material-ui-color';
+import Printer from './Printer';
 
 const MyToolbar = () => {
   let penContext = usePenContext();
@@ -27,6 +28,7 @@ const colorPickerChange = (e:any)=>{
         <IconButton edge="start" className='menuButton' color="inherit" aria-label="menu">
         </IconButton>
         <Button color="inherit" onClick={onMouseDown} >{penContext.toolType}</Button>
+        <Printer/>
         <ColorPicker defaultValue="black" value={penContext.color} onChange={colorPickerChange} />
         <TextField type="number" value={penContext.size} onChange={(e)=>{penContext.setSize(parseInt(e.target.value))}} />
       </Toolbar>
