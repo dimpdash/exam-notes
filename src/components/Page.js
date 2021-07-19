@@ -43,22 +43,6 @@ const savePointsToTree = (points, lines) => {
 
 const mm = 2;
 
-const Background = (props) => {
-    // console.log(props.canvas.width)
-    let lines = []
-    
-
-    let spacing = 10*mm
-    let numOfLines = Math.floor(props.canvas.height / spacing)
-    // console.log(numOfLines)
-    for(let i = 0; i < numOfLines; i++){
-        let line = new Line(0, spacing*(i+1), props.canvas.width, spacing*(i+1), 'blue');
-        lines.push(line)
-    }
-    
-    return lines.map( l => l.get());
-}
-
 const Page = (props) => {
     const penContext = usePenContext();
     let tool = penContext.toolType;
@@ -250,8 +234,6 @@ const Page = (props) => {
     let canvasProps = {
         width: 210*mm,
         height: 297*mm,
-        Background: Background
-
     }
     const preventTouch = props.preventTouch;
     const setPage = props.setPage;
@@ -268,7 +250,7 @@ const Page = (props) => {
 
     return (
         <div className={styles.page} styles={{width: canvasProps.width}}>
-            <Canvas {...canvasProps} elements={page.elements} onPointerMove={onPointerMove} onPointerDown={onPointerDown} onPointerUp={onPointerUp}></Canvas>
+            <Canvas {...canvasProps}  background={page.background} elements={page.elements} onPointerMove={onPointerMove} onPointerDown={onPointerDown} onPointerUp={onPointerUp}></Canvas>
         </div>
     );
 };

@@ -1,15 +1,18 @@
 import { createSingle, Action,  } from "context-class";
 import Page from "../interfaces/Page";
+import ruledLines from "../classes/backgrounds/RuledLines";
+
+let tmpPage = {elements: [], background: ruledLines(210*2,297*2, 10*2), width: 210*2, height: 297*2};
 
 export class PageState extends Action<PageState> {
     public title: string = "Untitled Document";
     public pages: Page[] = [
-        {key:0, elements: [], background: []},
-        {key:1, elements: [], background: []},
-        {key:2, elements: [], background: []}
+        {key:0, ...tmpPage},
+        {key:1, ...tmpPage},
+        {key:2, ...tmpPage}
     ]; //TODO agree that data structure is good type for pages
 
-    private keyMap = new Map(); 
+    public mm = 2; 
     private nextId: number = this.pages.length + 1;
 
     public setPages(pages:Page[]){
@@ -32,7 +35,7 @@ export class PageState extends Action<PageState> {
     public addPageAt(pageNumber: number){
         //Duplicate pages
         let pages = this.pages.slice(); 
-        pages.splice(pageNumber,0,{key: this.getNewPageKey(), elements: [], background: []});
+        pages.splice(pageNumber,0,{key: this.getNewPageKey(), ...tmpPage});
         this.setPages(pages)
         return pages;
     }

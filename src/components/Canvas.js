@@ -3,7 +3,7 @@ import styles from './styles.module.css';
 
 const Canvas = props => {
 
-    let {elements, Background, ...rest} = props
+    let {elements, background, ...rest} = props
     // Background |= () => null;
     // console.log(lines);
     // console.log(props.width, props.height)
@@ -17,7 +17,8 @@ const Canvas = props => {
         <div className={styles.canvas} style={divStyle}>
             <svg {...rest} xmlns="http://www.w3.org/2000/svg" viewBox="0 0" aria-labelledby="title">
                 <rect width="100%" height="100%" fill="white"/>
-                <Background canvas={rest}></Background>
+                {background}
+                {/* Seperate background and elements to two different layers for speed */}
                 {props.elements}  
                     
             </svg>
