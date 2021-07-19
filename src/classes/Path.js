@@ -4,14 +4,14 @@ export default class Path{
     segments = [];
     color = "black";
     points = [];
-
+    width = 5;
     constructor(lineId = 0){
         this.id = lineId;
     }
 
     moveTo(x,y){
         this.segments.push(`M ${x} ${y} `);
-        this.points.push({x:x, y:y, color:"blue"});
+        this.points.push({x:x, y:y, color:this.color});
     }
 
     bezierLineTo(x1, y1, x2, y2, x, y){
@@ -32,7 +32,7 @@ drawDots(){
     getPath(){
         return (
             <g>
-            <path key={this.lineId} d={this.getd()} stroke={this.color} fill="transparent"/>
+            <path key={this.lineId} d={this.getd()} strokeWidth={this.width} stroke={this.color} fill="transparent"/>
             {/* {this.drawDots()} */}
             </g>
             /* 

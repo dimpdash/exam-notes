@@ -132,12 +132,12 @@ const Page = (props) => {
         let pointerEvt = e.nativeEvent;
         // pointerEvt.preventDefault();
         // pointerEvt.stopPropagation();
-        if (e.pointerType == "pen"){
+        if (e.pointerType === "pen"){
             console.log("move here")
             pointerEvt.target.setPointerCapture(pointerEvt.pointerId)
             if (tool == "pen"){
                 penMove(e);
-            } else if (tool == "eraser") {
+            } else if (tool === "eraser") {
                 if (e.buttons == 1){
                     erase(pointerEvt);
                 }
@@ -191,6 +191,8 @@ const Page = (props) => {
         if (typeof(t) == 'undefined') t = 1;
         
         let line = new Path(count);
+        line.color = penContext.color;
+        line.width = penContext.size;
         
         line.moveTo(points[0].x, points[0].y);
         

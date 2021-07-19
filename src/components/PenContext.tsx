@@ -4,11 +4,19 @@ import { ToolTypes } from "../interfaces/ToolTypes";
 
 export class ToolState extends Action<ToolState> {
     public size: number = 24;
-    public color: string = "reg";
+    public color: string = "black";
     public toolType: ToolTypes = ToolTypes.Pen;
 
     public setTool(toolType:ToolTypes){
         this.merge({toolType});
+    }
+
+    public setSize(size: number){
+        this.merge({size});
+    }
+
+    public setColor(color:string){
+        this.merge({color});
     }
 
     private merge(newData:any){
