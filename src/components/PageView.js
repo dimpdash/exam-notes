@@ -2,7 +2,7 @@ import { MapInteractionCSS } from 'react-map-interaction';
 import Page from './Page';
 import { useState } from 'react';
 import {PageDivider} from './PageDivider'
-import { usePageContext } from "../contexts/PageContext";
+import { PageContextProvider, usePageContext } from "../contexts/PageContext";
 
 let onlyOneTouch = true;
 
@@ -39,7 +39,7 @@ const PageView = (props) => {
 
     const children = [];
     pages.forEach(({key}, index)=>{
-        children.push(<Page {...props} key={key}></Page>);
+        children.push(<Page {...props} page={pageContext.getPage(key)} setPage={(page) => pageContext.setPage(key,page)} key={key}></Page>);
         if(index !== children.length)
             children.push(<PageDivider onClick={(e) => pageContext.addPageAt(index+1)}/>);
     })

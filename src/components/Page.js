@@ -44,13 +44,13 @@ const savePointsToTree = (points, lines) => {
 const mm = 2;
 
 const Background = (props) => {
-    console.log(props.canvas.width)
+    // console.log(props.canvas.width)
     let lines = []
     
 
     let spacing = 10*mm
     let numOfLines = Math.floor(props.canvas.height / spacing)
-    console.log(numOfLines)
+    // console.log(numOfLines)
     for(let i = 0; i < numOfLines; i++){
         let line = new Line(0, spacing*(i+1), props.canvas.width, spacing*(i+1), 'blue');
         lines.push(line)
@@ -70,14 +70,14 @@ const Page = (props) => {
     
     function penMove(e){
         
-        console.log(e.buttons);
+        // console.log(e.buttons);
         if(e.buttons === 1){
-            console.log(e);
+            // console.log(e);
             e.nativeEvent.preventDefault() // prevent scrolling when inside DIV
             let pointerEvt = e.nativeEvent;
             // console.log(points[-1])
             if (!points[points.length-1] || DISTANCE_OF_NEXT_POINT_SQUARED < distSquared(points[points.length-1], getPos(pointerEvt))){
-                let old_lines = lines.slice();
+                let old_lines = elements.slice();
                 let newPoints = points.slice();
                 newPoints.push(getPos(pointerEvt));
                 // console.log(newPoints);
@@ -85,15 +85,15 @@ const Page = (props) => {
                 
                 // console.log(old_lines.length, currentLine);
                 // console.log(old_lines);
-                if (lines.length > count){
+                if (elements.length > count){
                     old_lines[old_lines.length - 1] = bzCurve(newPoints)
                     // console.log(old_lines);
-                    setLines(old_lines);
+                    setElements(old_lines);
                 }
                 else {
                     currentLineId = count;
                     old_lines.push(bzCurve(newPoints))
-                    setLines(old_lines);
+                    setElements(old_lines);
                 }
             }
             // console.log(lines);
@@ -101,7 +101,7 @@ const Page = (props) => {
     }
 
     function erase(pointerEvt){
-        console.log(getPos(pointerEvt));
+        // console.log(getPos(pointerEvt));
         let p = getPos(pointerEvt);
         let box = {};
         box.minX = p.x - 20;
@@ -109,15 +109,15 @@ const Page = (props) => {
         box.minY = p.y - 20;
         box.maxY = p.y + 20;
         let result = tree.search(box);
-        console.log(tree.all());
-        console.log(result);
-        console.log(lines)
-        let newLines = lines.slice();
+        // console.log(tree.all());
+        // console.log(result);
+        // console.log(elements)
+        let newLines = elements.slice();
         result.forEach( (p) => {
             tree.remove(p);
             newLines[p.line] = undefined;
         });
-        setLines(newLines);
+        setElements(newLines);
     }
 
     function distSquared(p1,p2){
@@ -133,7 +133,7 @@ const Page = (props) => {
         // pointerEvt.preventDefault();
         // pointerEvt.stopPropagation();
         if (e.pointerType === "pen"){
-            console.log("move here")
+            // console.log("move here")
             pointerEvt.target.setPointerCapture(pointerEvt.pointerId)
             if (tool == "pen"){
                 penMove(e);
@@ -152,10 +152,10 @@ const Page = (props) => {
         // pointerEvt.preventDefault();
         // pointerEvt.stopPropagation();
         if (e.pointerType == "pen"){
-            console.log('here');
+            // console.log('here');
             pointerEvt.target.setPointerCapture(pointerEvt.pointerId)
             if (tool == "pen"){
-                console.log(lines);
+                // console.log(elements);
                 setPoints([]);
                 points.push(getPos(pointerEvt));
             } else if (tool == "eraser") {
@@ -173,7 +173,7 @@ const Page = (props) => {
                     savePointsToTree(points, count);
 
                     setCount(count + 1);
-                    console.log(count);
+                    // console.log(count);
                     setPoints([]);
             }
         }
@@ -238,24 +238,37 @@ const Page = (props) => {
         return line.getPath(count);
     }
 
-        //Set state hooks
     
-    const [lines, setLines] = useState([]);
-    const [count, setCount] = useState(lines.length)
+
+    //Set state hooks
+    
+    const [elements, setElements] = useState([]);
+    const [count, setCount] = useState(elements.length)
     
     const [points, setPoints] = useState([]);
 
     let canvasProps = {
-        lines: lines,
         width: 210*mm,
         height: 297*mm,
         Background: Background
 
     }
     const preventTouch = props.preventTouch;
+    const setPage = props.setPage;
+    const page = props.page; 
+    // console.log(page);
+
+    useEffect( () => {
+        let newPage = { ...page };
+        newPage.elements = elements;
+        console.log(elements);
+        setPage(newPage);
+    }, [elements]);
+
+
     return (
         <div className={styles.page} styles={{width: canvasProps.width}}>
-            <Canvas {...canvasProps} onPointerMove={onPointerMove} onPointerDown={onPointerDown} onPointerUp={onPointerUp}></Canvas>
+            <Canvas {...canvasProps} elements={page.elements} onPointerMove={onPointerMove} onPointerDown={onPointerDown} onPointerUp={onPointerUp}></Canvas>
         </div>
     );
 };
