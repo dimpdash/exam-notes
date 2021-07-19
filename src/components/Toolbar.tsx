@@ -2,7 +2,7 @@ import React from 'react';
 import AppBar from '@material-ui/core/AppBar'
 import { Toolbar, IconButton, Typography, Button, TextField } from '@material-ui/core'
 import styles from './styles.module.css';
-import { usePenContext } from './PenContext';
+import { usePenContext } from '../contexts/PenContext';
 import { ToolTypes } from '../interfaces/ToolTypes';
 import { ColorPicker } from 'material-ui-color';
 import Printer from './Printer';

@@ -4,7 +4,7 @@ import Path from "../classes/Path";
 import Line from "../classes/Line";
 import RBush from "rbush";
 import styles from './styles.module.css'
-import { usePenContext } from "./PenContext";
+import { usePenContext } from "../contexts/PenContext";
 
 export function rollingAverage(points,i,N){
     let n = i-N >= 0 ? N : i+1
