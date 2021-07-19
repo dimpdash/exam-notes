@@ -13,15 +13,13 @@ const MyToolbar = (props) => {
       }
 
     return (
-        <div style={{'flexGrow': 1}}>
-            <AppBar>
+            <AppBar style={{position: 'relative'}}>
                 <Toolbar>
                     <IconButton edge="start" className='menuButton' color="inherit" aria-label="menu">
                     </IconButton>
                     <Button color="inherit" onClick={onMouseDown} >{props.tool}</Button>
                 </Toolbar>
         </AppBar>
-      </div>
     )
 }
 
