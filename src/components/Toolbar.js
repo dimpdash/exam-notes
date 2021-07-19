@@ -1,14 +1,17 @@
 import AppBar from '@material-ui/core/AppBar'
 import {Toolbar, IconButton, Typography, Button} from '@material-ui/core'
 import styles from './styles.module.css';
+import { usePenContext } from './PenContext';
+import { ToolTypes } from '../interfaces/ToolTypes';
 
-const MyToolbar = (props) => { 
+const MyToolbar = () => { 
+    let penContext = usePenContext();
+
     const onMouseDown = (e) => {
-        console.log(e);
-        if(props.tool == "pen"){
-          props.setTool("eraser")
+        if(penContext.toolType === "pen"){
+          penContext.setTool(ToolTypes.Eraser);
         } else {
-          props.setTool("pen");
+          penContext.setTool(ToolTypes.Pen);
         }
       }
 
@@ -17,7 +20,7 @@ const MyToolbar = (props) => {
                 <Toolbar>
                     <IconButton edge="start" className='menuButton' color="inherit" aria-label="menu">
                     </IconButton>
-                    <Button color="inherit" onClick={onMouseDown} >{props.tool}</Button>
+                    <Button color="inherit" onClick={onMouseDown} >{penContext.toolType}</Button>
                 </Toolbar>
         </AppBar>
     )

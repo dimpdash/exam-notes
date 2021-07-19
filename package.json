@@ -14,6 +14,7 @@
     "@types/react": "^17.0.14",
     "@types/react-dom": "^17.0.9",
     "babel-plugin-transform-export-extensions": "^6.22.0",
+    "context-class": "^1.1.0",
     "rbush": "^3.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

@@ -4,6 +4,7 @@ import Path from "../classes/Path";
 import Line from "../classes/Line";
 import RBush from "rbush";
 import styles from './styles.module.css'
+import { usePenContext } from "./PenContext";
 
 export function rollingAverage(points,i,N){
     let n = i-N >= 0 ? N : i+1
@@ -59,7 +60,8 @@ const Background = (props) => {
 }
 
 const Page = (props) => {
-    let tool = props.tool;;
+    const penContext = usePenContext();
+    let tool = penContext.toolType;
     let newPath = [];
     let currentLineId;
 
