@@ -58,7 +58,7 @@ const PageView = (props) => {
     })
 
     return (
-        //TODO allow users to add pages horizontally and vertically
+        //TODO allow users to add pages horizontally
         <div  style={{'touch-action': 'auto'}} onTouchStart={preventPenEvent} onTouchEnd={(e) =>  preventPenEvent(e)} onTouchMove={(e) =>  preventPenEvent(e)} onPointerMove={onPointerMove} onPointerDown={onPointerDown} onPointerUp={onPointerUp}>
             <MapInteractionCSS>
                 {children}                
