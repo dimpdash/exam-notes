@@ -6,15 +6,19 @@ import Page from './components/Page';
 import { useState } from 'react';
 import styles from './components/styles.module.css';
 import Toolbar from './components/Toolbar';
-import {PenContextProvider} from './contexts/PenContext';
+import AppContextProvider from './contexts/AppContext';
+import { PageContextProvider } from './contexts/PageContext';
+import { PenContextProvider } from './contexts/PenContext';
 
 function App() {
   return (
     <div className="App">
-      <PenContextProvider>
-        <Toolbar/>
-        <PageView />
-      </PenContextProvider>
+      <PageContextProvider>
+        <PenContextProvider>
+          <Toolbar/>
+          <PageView />
+        </PenContextProvider>
+      </PageContextProvider>
       {/* <Page tool={tool}/> */}
     </div>
   );
