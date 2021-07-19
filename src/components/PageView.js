@@ -59,7 +59,8 @@ const PageView = (props) => {
 
     return (
         //TODO allow users to add pages horizontally
-        <div  style={{'touch-action': 'auto'}} onTouchStart={preventPenEvent} onTouchEnd={(e) =>  preventPenEvent(e)} onTouchMove={(e) =>  preventPenEvent(e)} onPointerMove={onPointerMove} onPointerDown={onPointerDown} onPointerUp={onPointerUp}>
+        //text-align must be left otherwize zooming does not properly occur
+        <div  style={{'touch-action': 'auto', "text-align": "left"}} onTouchStart={preventPenEvent} onTouchEnd={(e) =>  preventPenEvent(e)} onTouchMove={(e) =>  preventPenEvent(e)} onPointerMove={onPointerMove} onPointerDown={onPointerDown} onPointerUp={onPointerUp}>
             <MapInteractionCSS>
                 {children}                
             </MapInteractionCSS>
