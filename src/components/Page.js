@@ -255,7 +255,7 @@ const Page = (props) => {
     const preventTouch = props.preventTouch;
     return (
         <div className={styles.page} styles={{width: canvasProps.width}}>
-            <Canvas {...canvasProps} onLostPointerCapture={() => console.log('Lost pointer capture')} onGotPointerCapture={() => console.log('Got pointer capture')} onPointerMove={onPointerMove} onPointerDown={onPointerDown} onPointerUp={onPointerUp}></Canvas>
+            <Canvas {...canvasProps} onPointerMove={onPointerMove} onPointerDown={onPointerDown} onPointerUp={onPointerUp}></Canvas>
         </div>
     );
 };
