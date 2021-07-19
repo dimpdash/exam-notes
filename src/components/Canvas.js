@@ -3,10 +3,6 @@ import styles from './styles.module.css';
 
 const Canvas = props => {
 
-    const svgLine = (line) => {
-        // console.log(line);
-        return line
-    }
     let {lines, Background, ...rest} = props
     // Background |= () => null;
     // console.log(lines);
@@ -22,7 +18,7 @@ const Canvas = props => {
             <svg {...rest} xmlns="http://www.w3.org/2000/svg" viewBox="0 0" aria-labelledby="title">
                 <rect width="100%" height="100%" fill="white"/>
                 <Background canvas={rest}></Background>
-                {props.lines.map(svgLine)}  
+                {props.lines}  
                     
             </svg>
         </div>
