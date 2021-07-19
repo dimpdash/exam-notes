@@ -6,7 +6,6 @@ import Page from './components/Page';
 import { useState } from 'react';
 import styles from './components/styles.module.css';
 import Toolbar from './components/Toolbar';
-import AppContextProvider from './contexts/AppContext';
 import { PageContextProvider } from './contexts/PageContext';
 import { PenContextProvider } from './contexts/PenContext';
 
