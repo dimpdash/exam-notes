@@ -1,4 +1,4 @@
-import { MapInteractionCSS } from 'react-map-interaction';
+import { MapInteractionCSS } from '../external/react-map-interaction';
 import Page from './Page';
 import { useState } from 'react';
 import {PageDivider} from './PageDivider'
@@ -46,11 +46,16 @@ const PageView = (props) => {
 
     return (
         //TODO allow users to add pages horizontally
-        //text-align must be left otherwize zooming does not properly occur
         <div  style={{'touch-action': 'auto', "text-align": "left"}} onWheel={preventScroll} onTouchStart={preventPenEvent} onTouchEnd={(e) =>  preventPenEvent(e)} onTouchMove={(e) =>  preventPenEvent(e)} onPointerMove={onPointerMove} onPointerDown={onPointerDown} onPointerUp={onPointerUp}>
-            <MapInteractionCSS onWheel={preventScroll}>
-                {children}                
+             <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+                 <div>
+            <MapInteractionCSS class="App"  onWheel={preventScroll}>
+               
+                {children}  
+                         
             </MapInteractionCSS>
+            </div>
+            </div>    
         </div>   
 
     )
