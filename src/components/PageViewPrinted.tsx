@@ -1,15 +1,40 @@
 import React from 'react'
+import Page from './Page';
+import Pageable from '../interfaces/Page';
+import { Component } from 'react';
+import {PageState} from '../contexts/PageContext';
 
-export default class PageViewPrinted extends React.PureComponent{
+type Props = {
+    pages: (Pageable | undefined)[][],
+}
 
-    public render()  {
+export default class PageViewPrinted extends Component<Props,{}> {
+
+    render(){
+        let pageGrid = this.props.pages;
+
+        const pages = pageGrid.flat();
+    
+        pages.filter((page: Pageable|undefined) => {
+            return page != undefined;
+        }) as Pageable[];
+
+
+        const children = pages.map((page) => {
+                if(page){
+                        return <Page 
+                            page={page} 
+                            setPage={(p: Pageable) => {}}
+                            key={page.key}
+                        />
+                    }
+                }
+            );
+
         return(
-        <div>
-            <p>hey</p>
-            <svg height="100" width="100">
-                <circle cx="50" cy="50" fill="yellow" r="40" stroke="green" strokeWidth="4" />
-            </svg>
-        </div>
+            <div>
+                {children}
+            </div>
         );
     }
 }
