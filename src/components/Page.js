@@ -112,7 +112,7 @@ const Page = (props) => {
     const onPointerMove = (e) => {
         // e.preventDefault()
         // e.stopPropagation();
-        // console.log(e)
+        console.log(e)
         let pointerEvt = e.nativeEvent;
         // pointerEvt.preventDefault();
         // pointerEvt.stopPropagation();
@@ -136,7 +136,7 @@ const Page = (props) => {
         // pointerEvt.preventDefault();
         // pointerEvt.stopPropagation();
         if (e.pointerType == "pen"){
-            // console.log('here');
+            console.log('here');
             pointerEvt.target.setPointerCapture(pointerEvt.pointerId)
             if (tool == "pen"){
                 // console.log(elements);
@@ -257,10 +257,15 @@ const Page = (props) => {
         setPage(newPage);
     }
 
+    const divStyle = {
+        'height': '100%',
+        'width': canvasProps.width,
+        'position': 'relative'
+    }
 
     return (
         <div className={styles.page} styles={{width: canvasProps.width}}>
-            <Canvas {...canvasProps}  background={page.background} elements={page.elements} onPointerMove={onPointerMove} onPointerDown={onPointerDown} onPointerUp={onPointerUp}></Canvas>
+            <Canvas {...canvasProps} divStyle={divStyle}  background={page.background} elements={page.elements} onPointerMove={onPointerMove} onPointerDown={onPointerDown} onPointerUp={onPointerUp}></Canvas>
         </div>
     );
 };

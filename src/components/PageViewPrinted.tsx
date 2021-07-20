@@ -3,6 +3,8 @@ import Page from './Page';
 import Pageable from '../interfaces/Page';
 import { Component } from 'react';
 import {PageState} from '../contexts/PageContext';
+import Canvas from './Canvas';
+import "./Print.css";
 
 type Props = {
     pages: (Pageable | undefined)[][],
@@ -19,14 +21,27 @@ export default class PageViewPrinted extends Component<Props,{}> {
             return page != undefined;
         }) as Pageable[];
 
+        const pageStyle ={
+            'height': '100%',
+            'width': '100%'
+        }
 
         const children = pages.map((page) => {
+                let style = {
+
+                }
                 if(page){
-                        return <Page 
-                            page={page} 
-                            setPage={(p: Pageable) => {}}
-                            key={page.key}
-                        />
+                        return (
+                            <div className="page">
+                                <Canvas width={210*2} height={297*2} elements={page.elements} background={page.background} divStyle={pageStyle}>
+                                    {/* <style>{"@media { margin: 0 0 0 0; size 297mm 210mm}"}</style> */}
+                                </Canvas>
+                                {/* <Page page={page} setPage={(p: Pageable) => {}} key={page.key}>
+                                    
+                                </Page> */}
+                                {/* <div className="page-break"></div> */}
+                            </div>
+                        );
                     }
                 }
             );
@@ -38,3 +53,14 @@ export default class PageViewPrinted extends Component<Props,{}> {
         );
     }
 }
+
+// const divStyle = {
+//     'height': '100%',
+//     'width': canvasProps.width,
+//     'position': 'relative'
+// }
+
+// return (
+//     <div className={styles.page} styles={{width: canvasProps.width}}>
+//         <Canvas {...canvasProps} divStyle={divStyle}  background={page.background} elements={page.elements} onPointerMove={onPointerMove} onPointerDown={onPointerDown} onPointerUp={onPointerUp}></Canvas>
+//     </div>
