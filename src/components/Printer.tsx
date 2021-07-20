@@ -64,6 +64,7 @@ export const Printer = () => {
       </button>
 
       {/* div prevents displaying the content to be printed */}
+      {/* TODO have this displayed and rendered only before printing for performance */}
       <div style={{display: "none"}}> 
         <ComponentToPrint ref={componentRef} pages={pageContext.pages}/>
       </div>
