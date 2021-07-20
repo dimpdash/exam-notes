@@ -38,6 +38,9 @@ export class PageState extends Action<PageState> {
 
     public addPageAt(columnIndex: number, rowIndex: number, isVertical:boolean){
         if(isVertical){
+            while(this.pages.length <= rowIndex)
+                this.pages.push([])
+            
             if(this.pages[rowIndex][columnIndex] && (rowIndex==0 || this.pages[rowIndex-1][columnIndex])){
                 let col : (Page | undefined)[] = [];
                 for(let i = 0; i < columnIndex; i++)

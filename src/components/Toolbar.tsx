@@ -23,7 +23,7 @@ const colorPickerChange = (e:any)=>{
 }
 
   return (
-    <AppBar style={{ position: 'relative' }}>
+    <AppBar style={{ position: 'sticky' }}>
       <Toolbar>
         <IconButton edge="start" className='menuButton' color="inherit" aria-label="menu">
         </IconButton>
