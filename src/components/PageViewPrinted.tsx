@@ -32,9 +32,8 @@ export default class PageViewPrinted extends Component<Props,{}> {
             );
 
         return(
-            <div style={{display: "block"}}>
+            <div>
                 {children}
-                <p>hey</p>
             </div>
         );
     }
