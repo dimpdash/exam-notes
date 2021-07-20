@@ -1,5 +1,5 @@
 import { createSingle, Action,  } from "context-class";
-import Page, { deepCopyPage } from "../interfaces/Page";
+import Page from "../interfaces/Page";
 import ruledLines from "../classes/backgrounds/RuledLines";
 
 let tmpPage = {elements: [], background: ruledLines(210*2,297*2, 10*2), width: 210*2, height: 297*2};
