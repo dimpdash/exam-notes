@@ -187,12 +187,6 @@ const Page = (props) => {
     tool.tree = tree;
     tool.elements = elements;
 
-    const divStyle = {
-        'height': '100%',
-        'width': canvasProps.width,
-        'position': 'relative'
-    }
-
 
     return (
         <div className={styles.page} styles={{width: canvasProps.width}}>
