@@ -43,6 +43,7 @@ export class PenTool extends Tool{
     }
 
     public pointerDown(e:React.PointerEvent<SVGSVGElement>){
+        console.log(e);
         let pointerEvt = e.nativeEvent;
         if(pointerEvt?.target){
             if (e.pointerType == "pen"){

@@ -33,7 +33,13 @@ export default class PageViewPrinted extends Component<Props,{}> {
                 if(page){
                         return (
                             <div className="page">
-                                <Canvas width={210*2} height={297*2} elements={page.elements} background={page.background} divStyle={pageStyle}>
+                                <Canvas 
+                                    width={"100%"} 
+                                    height={"100%"}
+                                    viewBox={`0 0 ${210*2} ${297*2}`} 
+                                    elements={page.elements} 
+                                    background={page.background} 
+                                    divStyle={pageStyle}>
                                     {/* <style>{"@media { margin: 0 0 0 0; size 297mm 210mm}"}</style> */}
                                 </Canvas>
                                 {/* <Page page={page} setPage={(p: Pageable) => {}} key={page.key}>

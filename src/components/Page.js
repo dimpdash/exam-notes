@@ -177,7 +177,7 @@ const Page = (props) => {
         tool = new EraserTool(setPoints,savePointsToTree, setCount,penMove, setElements);
     }
     const divStyle = {
-        'height': '100%',
+        'height': canvasProps.height,
         'width': canvasProps.width,
         'position': 'relative'
     }
@@ -189,12 +189,15 @@ const Page = (props) => {
 
 
     return (
-        <div className={styles.page} styles={{width: canvasProps.width}}>
+        <div className={styles.page} styles={{width: canvasProps.width, height: canvasProps.height}}>
             <Canvas {...canvasProps}  background={page.background} elements={page.elements} 
             onPointerMove={(e)=>tool.pointerMove(e)} 
             onPointerDown={(e)=>tool.pointerDown(e)} 
-            onPointerUp={(e)=>tool.pointerUp(e)}>
-
+            onPointerUp={(e)=>tool.pointerUp(e)}
+            width={canvasProps.width}
+            height={canvasProps.height}
+            viewBox="0 0">
+            
             </Canvas>
         </div>
     );
