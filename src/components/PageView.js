@@ -77,7 +77,15 @@ const PageView = (props) => {
                 ]
                 ).concat()
             }
-        </tr>]
+        </tr>,
+        r === pages.length-1 && <tr>
+        {Array(columnSize).fill(1).map((_,c)=>[
+            <td></td>,
+            <td> {pages[r][c] && <PageDivider isHorizontal={true} onClick={(e) => pageContext.addPageAt(c,r+1, true)}/>}</td>,
+        ]
+        ).concat()}
+        </tr>
+    ]
     ).concat();
 
     // pages.forEach(({key}, index)=>{

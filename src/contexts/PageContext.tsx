@@ -1,5 +1,5 @@
 import { createSingle, Action,  } from "context-class";
-import Page, { deepCopyPage } from "../interfaces/Page";
+import Page from "../interfaces/Page";
 import ruledLines from "../classes/backgrounds/RuledLines";
 
 let tmpPage = {elements: [], background: ruledLines(210*2,297*2, 10*2), width: 210*2, height: 297*2};
@@ -38,6 +38,9 @@ export class PageState extends Action<PageState> {
 
     public addPageAt(columnIndex: number, rowIndex: number, isVertical:boolean){
         if(isVertical){
+            while(this.pages.length <= rowIndex)
+                this.pages.push([])
+            
             if(this.pages[rowIndex][columnIndex] && (rowIndex==0 || this.pages[rowIndex-1][columnIndex])){
                 let col : (Page | undefined)[] = [];
                 for(let i = 0; i < columnIndex; i++)
