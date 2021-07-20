@@ -2,8 +2,10 @@ import * as React from "react";
 
 import ComponentToPrint from "./PageViewPrinted";
 import { useReactToPrint } from "react-to-print";
+import { usePageContext} from '../contexts/PageContext';
 
 export const Printer = () => {
+  const pageContext = usePageContext();
   const componentRef = React.useRef(null);
 
   const onBeforeGetContentResolve = React.useRef<(() => void) | null>(null);
@@ -63,7 +65,7 @@ export const Printer = () => {
 
       {/* div prevents displaying the content to be printed */}
       <div style={{display: "none"}}> 
-        <ComponentToPrint ref={componentRef}/>
+        <ComponentToPrint ref={componentRef} pages={pageContext.pages}/>
       </div>
     </div>
   );
