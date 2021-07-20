@@ -22,7 +22,7 @@ export class PageState extends Action<PageState> {
         this.merge({pages})
     }
 
-    public setPage(column: number, row: number, page: Page){
+    public setPage(column: number, row: number, page?: Page){
         //console.log(this);
         let pages = this.pages.slice();
         pages[row][column] = page; 
@@ -105,6 +105,53 @@ export class PageState extends Action<PageState> {
         }))
 
         return page;
+    }
+
+    private removeUndefinedRow(pages: (Page|undefined)[][]){
+        return pages.filter((row)=>!row.every((value)=>value===undefined))
+    }
+
+    private removeUndefinedColumn(pages: (Page|undefined)[][]){
+        let columnSize = Math.max(...pages.map(row => row.length));
+
+        let columnsToRemove :number[]= []
+        for(let c = 0; c < columnSize; c++){
+            let empty = true;
+            for(let r = 0; r < this.pages.length; r++){
+                if(this.pages[r][c]){
+                    empty=false;
+                    break;
+                }
+            }
+            if(empty){
+                columnsToRemove.push(c);
+            }
+        }
+
+       console.log(columnsToRemove)
+        return this.pages.map((row)=>row.filter((p,index)=>!columnsToRemove.includes(index)));
+    }
+
+    public deletePage(column:number, row:number){
+        this.pages[row][column] = undefined;
+        this.pages = this.removeUndefinedRow(this.pages);
+        this.pages = this.removeUndefinedColumn(this.pages);
+        this.setPages(this.pages)
+    }
+
+    public deletePageUp(column:number, row:number){
+        this.setPage(column,row, undefined);
+        for(let r = row+1; r < this.pages.length; r++){
+            this.pages[r-1][column] = this.pages[r][column];
+        }
+        this.pages[this.pages.length-1][column] = undefined;
+        this.setPages(this.pages);
+    }
+
+    public deletePageLeft(column:number, row:number){
+        this.pages[row][column] = undefined;
+        this.pages[row].splice(column, 1);
+        this.setPages(this.pages);
     }
 
     public getPageCR(col:number, row:number) {
