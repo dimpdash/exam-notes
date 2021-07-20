@@ -36,7 +36,7 @@ export default class PageViewPrinted extends Component<Props,{}> {
                                 <Canvas 
                                     width={"100%"} 
                                     height={"100%"}
-                                    viewBox={`0 0 ${210*2} ${297*2}`} 
+                                    viewBox={`0 0 ${page.width} ${page.height}`} 
                                     elements={page.elements} 
                                     background={page.background} 
                                     divStyle={pageStyle}>
