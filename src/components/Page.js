@@ -5,6 +5,7 @@ import Line from "../classes/Line";
 import RBush from "rbush";
 import styles from './styles.module.css'
 import { usePenContext } from "../contexts/PenContext";
+import {PenTool, EraserTool} from '../classes/PenTool';
 
 export function rollingAverage(points,i,N){
     let n = i-N >= 0 ? N : i+1
@@ -43,12 +44,13 @@ const savePointsToTree = (points, lines) => {
 
 const mm = 2;
 
+
 const Page = (props) => {
     const penContext = usePenContext();
-    let tool = penContext.toolType;
+   
+
     let newPath = [];
     let currentLineId;
-
 
 
     
@@ -84,87 +86,9 @@ const Page = (props) => {
         }
     }
 
-    function erase(pointerEvt){
-        // console.log(getPos(pointerEvt));
-        let p = getPos(pointerEvt);
-        let box = {};
-        box.minX = p.x - 20;
-        box.maxX = p.x + 20;
-        box.minY = p.y - 20;
-        box.maxY = p.y + 20;
-        let result = tree.search(box);
-        // console.log(tree.all());
-        // console.log(result);
-        // console.log(elements)
-        let newLines = elements.slice();
-        result.forEach( (p) => {
-            tree.remove(p);
-            newLines[p.line] = undefined;
-        });
-        setElements(newLines);
-    }
-
     function distSquared(p1,p2){
         return (p1.x-p2.x)**2 + (p2.y-p1.y)**2;
     }
-
-
-    const onPointerMove = (e) => {
-        // e.preventDefault()
-        // e.stopPropagation();
-        console.log(e)
-        let pointerEvt = e.nativeEvent;
-        // pointerEvt.preventDefault();
-        // pointerEvt.stopPropagation();
-        if (e.pointerType === "pen"){
-            // console.log("move here")
-            pointerEvt.target.setPointerCapture(pointerEvt.pointerId)
-            if (tool == "pen"){
-                penMove(e);
-            } else if (tool === "eraser") {
-                if (e.buttons == 1){
-                    erase(pointerEvt);
-                }
-            }
-        }
-    };
-
-    const onPointerDown = (e) => {
-        // e.preventDefault()
-        // e.stopPropagation();
-        let pointerEvt = e.nativeEvent;
-        // pointerEvt.preventDefault();
-        // pointerEvt.stopPropagation();
-        if (e.pointerType == "pen"){
-            console.log('here');
-            pointerEvt.target.setPointerCapture(pointerEvt.pointerId)
-            if (tool == "pen"){
-                // console.log(elements);
-                setPoints([]);
-                points.push(getPos(pointerEvt));
-            } else if (tool == "eraser") {
-                erase(pointerEvt);
-            }
-        }
-    };
-
-    const onPointerUp = (e) => {
-        // e.preventDefault()
-        // e.stopPropagation();
-        //save to tree
-        if (e.pointerType == "pen"){
-            if (tool == "pen"){
-                    savePointsToTree(points, count);
-
-                    setCount(count + 1);
-                    // console.log(count);
-                    setPoints([]);
-            }
-        }
-
-
-    };
-
 
     function gradient(a, b) {
         return (b.y-a.y)/(b.x-a.x);
@@ -239,23 +163,29 @@ const Page = (props) => {
     }
     const preventTouch = props.preventTouch;
     const setPage = props.setPage;
-   
-    // console.log(page);
 
-    useEffect( () => {
-        let newPage = { ...page };
-        newPage.elements = elements;
-        console.log(elements);
-        setPage(newPage);
-    }, []);
-
-    
     const setElements = (elements)=>{
         let newPage = { ...page };
         newPage.elements = elements;
-        console.log(elements);
         setPage(newPage);
     }
+
+    let tool = undefined;
+    if(penContext.toolType === 'pen'){
+        tool = new PenTool(setPoints,savePointsToTree, setCount,penMove, setElements);
+    }else{
+        tool = new EraserTool(setPoints,savePointsToTree, setCount,penMove, setElements);
+    }
+    const divStyle = {
+        'height': '100%',
+        'width': canvasProps.width,
+        'position': 'relative'
+    }
+    
+    tool.count = count;
+    tool.points = points;
+    tool.tree = tree;
+    tool.elements = elements;
 
     const divStyle = {
         'height': '100%',
@@ -263,9 +193,15 @@ const Page = (props) => {
         'position': 'relative'
     }
 
+
     return (
         <div className={styles.page} styles={{width: canvasProps.width}}>
-            <Canvas {...canvasProps} divStyle={divStyle}  background={page.background} elements={page.elements} onPointerMove={onPointerMove} onPointerDown={onPointerDown} onPointerUp={onPointerUp}></Canvas>
+            <Canvas {...canvasProps}  background={page.background} elements={page.elements} 
+            onPointerMove={(e)=>tool.pointerMove(e)} 
+            onPointerDown={(e)=>tool.pointerDown(e)} 
+            onPointerUp={(e)=>tool.pointerUp(e)}>
+
+            </Canvas>
         </div>
     );
 };
