@@ -239,21 +239,10 @@ const Page = (props) => {
     }
     const preventTouch = props.preventTouch;
     const setPage = props.setPage;
-   
-    // console.log(page);
 
-    useEffect( () => {
-        let newPage = { ...page };
-        newPage.elements = elements;
-        console.log(elements);
-        setPage(newPage);
-    }, []);
-
-    
     const setElements = (elements)=>{
         let newPage = { ...page };
         newPage.elements = elements;
-        console.log(elements);
         setPage(newPage);
     }
 

@@ -23,11 +23,9 @@ export class PageState extends Action<PageState> {
     }
 
     public setPage(column: number, row: number, page?: Page){
-        //console.log(this);
         let pages = this.pages.slice();
         pages[row][column] = page; 
         this.setPages(pages);
-        console.log(pages)
     }
 
 
@@ -52,7 +50,6 @@ export class PageState extends Action<PageState> {
                 rowPages.splice(rowIndex, 0, col);
                 this.setPages(rowPages);
             }else{
-                console.log("here")
                 if(!this.pages[rowIndex-1][columnIndex]){
                     rowIndex --;
                 }
@@ -74,26 +71,9 @@ export class PageState extends Action<PageState> {
                 }
                 rowPages[rowIndex][columnIndex] = {key: this.getNewPageKey(), ...tmpPage};
             }
-            // for(let i = 0; i < rowPages.length; i++){
-            //     let page : (Page|undefined) = undefined;
-            //     if(i === rowIndex)
-            //         page = {key: this.getNewPageKey(), ...tmpPage};
-            //     rowPages[i].splice(columnIndex, 0, page);
-            // }
+    
             this.setPages(rowPages);
         }
-
-
-        // let newPages = this.pages.map((rowPages)=>{
-        //     //make a copy
-        //     rowPages = rowPages.slice(); 
-        //     //insert new page
-        //     rowPages.splice(columnIndex,0,{key: this.getNewPageKey(), ...tmpPage});
-        //     return rowPages;
-        // })
-       
-        // this.setPages(newPages);
-        // return newPages;
     }
 
     public getPage(key: number) : Page | undefined{
@@ -127,8 +107,6 @@ export class PageState extends Action<PageState> {
                 columnsToRemove.push(c);
             }
         }
-
-       console.log(columnsToRemove)
         return this.pages.map((row)=>row.filter((p,index)=>!columnsToRemove.includes(index)));
     }
 
@@ -159,9 +137,7 @@ export class PageState extends Action<PageState> {
     }
 
     private merge(newData:any){
-        // console.log(newData)
         this.setState((prev:PageState)=>{ 
-            // console.log(prev)
             return{...prev, ...newData} as PageState});
     }
 }

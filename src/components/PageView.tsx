@@ -81,20 +81,19 @@ function PageTable() {
 const PageView = () => {
     const pageContext = usePageContext();
 
-    let pointerType: any = null;
-
+    const [pointerType, setPointerType] = useState<any>(undefined);
     const onPointerMove = (e: any) => {
-        pointerType = e.pointerType
+        setPointerType(e.pointerType);
     }
 
     const onPointerUp = (e: any) => {
-        pointerType = e.pointerType
+        setPointerType(e.pointerType);
     }
 
 
     // onPointerDown seems to be triggered before onTouchStart so can pass the pointer type to touch start event to discriminate touch events between finger and stylus
     const onPointerDown = (e: any) => {
-        pointerType = e.pointerType
+        setPointerType(e.pointerType);
     }
 
     function preventPenEvent(e: any) {
@@ -121,7 +120,6 @@ const PageView = () => {
     }
 
     return (
-        //TODO allow users to add pages horizontally
         <div style={{ touchAction: 'auto', textAlign: "left" }}
             onWheel={preventScroll}
             onTouchStart={preventPenEvent} onTouchEnd={preventPenEvent}
