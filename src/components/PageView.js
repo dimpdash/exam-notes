@@ -53,27 +53,9 @@ const PageView = (props) => {
                 [
                 c===0 && <td> { pages[r][c] && <PageDivider isHorizontal={true} onClick={(e) => pageContext.addPageAt(c,r, false)}/> }</td>,
                 <td>{page && <Page {...props} page={pageContext.getPageCR(c,r)} setPage={(page) => pageContext.setPage(c,r,page)} key={page.key}></Page> }</td>,
-                <td>{(pages[r][c] || (c<row.length && pages[r][c+1])) && <PageDivider isHorizontal={false}  onClick={(e) => pageContext.addPageAt(c+1,r, false)}/>}</td>
-                   
-                    // <table width="100%" style={{height:"100%"}}>
-                    //     <tr>
-                    //         <td></td>
-                    //         <td> {(r==0) && <PageDivider isHorizontal={true} onClick={(e) => pageContext.addPageAt(c,r, true)}/>}</td>
-                    //         <td></td>
-                    //     </tr>
-                    //     <tr>
-                    //         <td> {(c==0) &&<PageDivider isHorizontal={false}  onClick={(e) => pageContext.addPageAt(c,r, false)}/>}</td> 
-                    //         <td>  {page && <Page {...props} page={pageContext.getPageCR(c,r)} setPage={(page) => pageContext.setPage(c,r,page)} key={page.key}></Page> }</td>
-                    //         <td > {(page || !pages[r][c+1]) && <PageDivider isHorizontal={false}  onClick={(e) => pageContext.addPageAt(c+1,r, false)}/> } </td>
-                    //     </tr>
-                    //     <tr>
-                    //         <td></td>
-                    //         <td  ><PageDivider isHorizontal={true} onClick={(e) => pageContext.addPageAt(c,r+1, true)}/></td>
-                    //         <td></td>
-                    //     </tr>
-                    
-                    //  </table>
-                    
+                <td>{(pages[r][c] || (c<row.length && pages[r][c+1])) && 
+                    <PageDivider isHorizontal={false}  onClick={(e) => pageContext.addPageAt(c+1,r, false)}/>}
+                </td>                    
                 ]
                 ).concat()
             }

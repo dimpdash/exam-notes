@@ -198,8 +198,7 @@ export class MapInteractionControlled extends Component {
   }
 
   onWheel(e) {
-    return;
-    if (this.props.disableZoom) {
+    if (this.props.disableZoom || !e.ctrlKey) {
       return;
     }
 
