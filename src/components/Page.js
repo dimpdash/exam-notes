@@ -157,10 +157,6 @@ const Page = (props) => {
     
     const [points, setPoints] = useState([]);
 
-    let canvasProps = {
-        width: 210*mm,
-        height: 297*mm,
-    }
     const preventTouch = props.preventTouch;
     const setPage = props.setPage;
 
@@ -177,8 +173,8 @@ const Page = (props) => {
         tool = new EraserTool(setPoints,savePointsToTree, setCount,penMove, setElements);
     }
     const divStyle = {
-        'height': canvasProps.height,
-        'width': canvasProps.width,
+        'height': props.page.height,
+        'width': props.page.width,
         'position': 'relative'
     }
     
@@ -189,13 +185,13 @@ const Page = (props) => {
 
 
     return (
-        <div className={styles.page} styles={{width: canvasProps.width, height: canvasProps.height}}>
-            <Canvas {...canvasProps}  background={page.background} elements={page.elements} 
+        <div className={styles.page} styles={{width: props.page.width, height: props.page.height}}>
+            <Canvas background={page.background} elements={page.elements} 
             onPointerMove={(e)=>tool.pointerMove(e)} 
             onPointerDown={(e)=>tool.pointerDown(e)} 
             onPointerUp={(e)=>tool.pointerUp(e)}
-            width={canvasProps.width}
-            height={canvasProps.height}
+            width={props.page.width}
+            height={props.page.height}
             viewBox="0 0">
             
             </Canvas>
