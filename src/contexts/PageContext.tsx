@@ -123,12 +123,16 @@ export class PageState extends Action<PageState> {
             this.pages[r-1][column] = this.pages[r][column];
         }
         this.pages[this.pages.length-1][column] = undefined;
+        this.pages = this.removeUndefinedRow(this.pages);
+        this.pages = this.removeUndefinedColumn(this.pages);
         this.setPages(this.pages);
     }
 
     public deletePageLeft(column:number, row:number){
         this.pages[row][column] = undefined;
         this.pages[row].splice(column, 1);
+        this.pages = this.removeUndefinedRow(this.pages);
+        this.pages = this.removeUndefinedColumn(this.pages);
         this.setPages(this.pages);
     }
 
