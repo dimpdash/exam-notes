@@ -33,16 +33,61 @@ const PageView = (props) => {
     }
 
     function preventScroll(e){
-        console.log(e);
         e.stopPropagation();
     }
 
-    const children = [];
-    pages.forEach(({key}, index)=>{
-        children.push(<Page {...props} page={pageContext.getPage(key)} setPage={(page) => pageContext.setPage(key,page)} key={key}></Page>);
-        if(index !== children.length)
-            children.push(<PageDivider onClick={(e) => pageContext.addPageAt(index+1)}/>);
-    })
+    let columnSize = Math.max(...pages.map(row=>row.length));
+    console.log(columnSize)
+    let children = pages.map((row, r)=>
+         [ 
+            <tr>
+                {Array(columnSize).fill(1).map((_,c)=>[
+                    <td></td>,
+                    <td> {(pages[r][c] || (r>0 && pages[r-1][c])) && <PageDivider isHorizontal={true} onClick={(e) => pageContext.addPageAt(c,r, true)}/>}</td>,
+                ]
+                ).concat()}
+            </tr> ,
+         <tr>
+            {
+                row.map((page,c)=>
+                [
+                c===0 && <td> { pages[r][c] && <PageDivider isHorizontal={true} onClick={(e) => pageContext.addPageAt(c,r, false)}/> }</td>,
+                <td>{page && <Page {...props} page={pageContext.getPageCR(c,r)} setPage={(page) => pageContext.setPage(c,r,page)} key={page.key}></Page> }</td>,
+                <td>{(pages[r][c] || (c<row.length && pages[r][c+1])) && <PageDivider isHorizontal={false}  onClick={(e) => pageContext.addPageAt(c+1,r, false)}/>}</td>
+                   
+                    // <table width="100%" style={{height:"100%"}}>
+                    //     <tr>
+                    //         <td></td>
+                    //         <td> {(r==0) && <PageDivider isHorizontal={true} onClick={(e) => pageContext.addPageAt(c,r, true)}/>}</td>
+                    //         <td></td>
+                    //     </tr>
+                    //     <tr>
+                    //         <td> {(c==0) &&<PageDivider isHorizontal={false}  onClick={(e) => pageContext.addPageAt(c,r, false)}/>}</td> 
+                    //         <td>  {page && <Page {...props} page={pageContext.getPageCR(c,r)} setPage={(page) => pageContext.setPage(c,r,page)} key={page.key}></Page> }</td>
+                    //         <td > {(page || !pages[r][c+1]) && <PageDivider isHorizontal={false}  onClick={(e) => pageContext.addPageAt(c+1,r, false)}/> } </td>
+                    //     </tr>
+                    //     <tr>
+                    //         <td></td>
+                    //         <td  ><PageDivider isHorizontal={true} onClick={(e) => pageContext.addPageAt(c,r+1, true)}/></td>
+                    //         <td></td>
+                    //     </tr>
+                    
+                    //  </table>
+                    
+                ]
+                ).concat()
+            }
+        </tr>]
+    ).concat();
+
+    // pages.forEach(({key}, index)=>{
+        
+        
+
+    //     children.push(<Page {...props} page={pageContext.getPage(key)} setPage={(page) => pageContext.setPage(key,page)} key={key}></Page>);
+    //     if(index !== children.length)
+    //         children.push(<PageDivider onClick={(e) => pageContext.addPageAt(index+1)}/>);
+    // })
 
     return (
         //TODO allow users to add pages horizontally
@@ -50,9 +95,9 @@ const PageView = (props) => {
              <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
                  <div>
             <MapInteractionCSS class="App"  onWheel={preventScroll}>
-               
+            <table>
                 {children}  
-                         
+                </table>
             </MapInteractionCSS>
             </div>
             </div>    

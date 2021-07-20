@@ -226,7 +226,9 @@ const Page = (props) => {
 
     //Set state hooks
     
-    const [elements, setElements] = useState([]);
+    // const [elements, setElements] = useState([]);
+    const page = props.page; 
+    const elements = page.elements;
     const [count, setCount] = useState(elements.length)
     
     const [points, setPoints] = useState([]);
@@ -237,7 +239,7 @@ const Page = (props) => {
     }
     const preventTouch = props.preventTouch;
     const setPage = props.setPage;
-    const page = props.page; 
+   
     // console.log(page);
 
     useEffect( () => {
@@ -245,7 +247,15 @@ const Page = (props) => {
         newPage.elements = elements;
         console.log(elements);
         setPage(newPage);
-    }, [elements]);
+    }, []);
+
+    
+    const setElements = (elements)=>{
+        let newPage = { ...page };
+        newPage.elements = elements;
+        console.log(elements);
+        setPage(newPage);
+    }
 
 
     return (
