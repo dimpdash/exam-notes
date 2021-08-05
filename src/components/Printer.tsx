@@ -3,6 +3,8 @@ import * as React from "react";
 import ComponentToPrint from "./PageViewPrinted";
 import { useReactToPrint } from "react-to-print";
 import { usePageContext} from '../contexts/PageContext';
+import { IconButton } from "@material-ui/core";
+import PrintIcon from '@material-ui/icons/Print';
 
 export const Printer = () => {
   const pageContext = usePageContext();
@@ -59,9 +61,9 @@ export const Printer = () => {
   return (
     <div>
       {loading && <p className="indicator">onBeforeGetContent: Loading...</p>}
-      <button onClick={handlePrint}>
-        Print
-      </button>
+      <IconButton aria-label="delete" onClick={handlePrint} className='menuButton'>
+          <PrintIcon color="primary"/>
+      </IconButton>
 
       {/* div prevents displaying the content to be printed */}
       {/* TODO have this displayed and rendered only before printing for performance */}

@@ -122,9 +122,11 @@ const PageView = () => {
     return (
         <div style={{ touchAction: 'auto', textAlign: "left" }}
             onWheel={preventScroll}
-            onTouchStart={preventPenEvent} onTouchEnd={preventPenEvent}
-            onTouchMove={preventPenEvent} onPointerMove={onPointerMove}
-            onPointerDown={onPointerDown} onPointerUp={onPointerUp}>
+            onTouchStart={preventPenEvent} onPointerDown={onPointerDown}
+            onTouchMove={preventPenEvent}  onPointerMove={onPointerMove}
+            onTouchEnd={preventPenEvent}   onPointerUp={onPointerUp} 
+            
+            >
 
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <div>

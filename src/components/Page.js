@@ -55,7 +55,6 @@ const Page = (props) => {
 
     
     function penMove(e){
-        
         // console.log(e.buttons);
         if(e.buttons === 1){
             // console.log(e);
@@ -190,6 +189,7 @@ const Page = (props) => {
             onPointerMove={(e)=>tool.pointerMove(e)} 
             onPointerDown={(e)=>tool.pointerDown(e)} 
             onPointerUp={(e)=>tool.pointerUp(e)}
+            onMouseMove={(e) => console.log(e.button, e.buttons)}
             width={props.page.width}
             height={props.page.height}
             viewBox="0 0">
